@@ -1,0 +1,219 @@
+
+FILE SETUP
+
+create server folder
+-create 'index.js'
+-create controllers folder
+    (create authController.js / mainController.js)
+
+in src create routes.js
+
+create '.env'
+-put it in gitignore
+
+in src create redux folder
+
+in src create components folder
+-create 'Landing.js'
+-create 'Register.js'
+-create 'Account.js
+
+in redux 
+-create 'reducer.js'
+-create 'store.js'
+
+create db folder in root
+
+
+BACKEND
+
+SQL tabs
+-create schema table in LucidCharts(?)
+-check Database in SQL tabs in database info / public to make sure the table isn't taken
+-create Table/s
+(ie.)
+    create table bank_users (
+    bank_user_id serial primary key,
+    bank_user_email varchar(100),
+    bank_user_password varchar(250)
+    );
+    create table user_account (
+    user_account_id serial primary key,
+    bank_user_id int references bank_users(bank_user_id),
+    account_balance float
+    );
+
+-save the table creation in 'seed.sql' for reference
+
+in package.json
+-add    "main": "server/index.js",
+        "proxy": "http://localhost:4040",
+
+in db create 'seed.sql'
+
+run 'npm i express dotenv massive express-session'
+
+index.js 
+-set-up
+-require packages we just brought in
+-make const port / app.listen
+
+.env
+-port setup
+
+index.js
+-destructure Port stuff
+
+(nodemon should now be working)
+
+index.js
+-set up massive connection to connect to db
+(server / db should now be running)
+-set up 'session' to create a cookie session
+
+authController
+-first run npm i bcryptjs
+-require it in authController //to protect password
+-set-up 'module.exports'
+
+db folder
+-create 'register.sql'
+-create 'check_email.sql'
+
+check_email.sql
+-set up sql to find emails in db
+
+register.sql
+-set up to insert into table
+
+create_account.sql
+-set up insert into other table
+
+authController
+-create our functions 
+    -(add 'async' to login / register so that it checks the login before running other functions))
+    -(destructuring from the front end(which we haven't build yet))
+    -(pulling from db)
+    -(authenticate using bcrypt)
+
+
+FRONT END
+-PAGE SETUP
+
+Src - 'Landing.js' / 'Register.js' / 'Account.js'
+-build out renders / exports
+-(Account.js is a functional component so it doesn't have a render and uses an arrow function)
+
+-npm i 'react-router-dom'
+
+app.js
+-clean up
+-import 'HashRouter' / wrap your 'app' div in 'HashRouter'
+-import 'routes'
+-add '{routes}' inside of the div (this may give an error right now)
+
+CONNECT ROUTES
+
+routes.js
+-import our 'Switch / Route'
+-import 'component' pages
+-export a 'Switch' with each component as a 'Route' inside
+
+COMPONENT FUNCTIONALITY 
+
+-npm i axios
+
+index.js
+-require authController
+-add Endpoints
+
+Landing.js
+-create 'constructor' / 'state'
+-create 'componentDidMount' and add axios requests
+-create 'handleInput'
+-import '{Link}'
+-Create inputs / buttons / link to other page
+
+
+REDUX
+
+-npm i redux react-redux
+
+reducer.js
+-create initial state (with values if you have them)
+-create actions
+-export state using 'switch'
+
+store.js
+-import 'createStore' / 'reducer'
+-export 'createStore' with 'reducer' as the param
+
+app.js
+-import 'store'
+-import 'Provider' and wrap the whole 'app'/hashrouter' in it (provides the store to everything in the app)
+
+Landing.js
+-import 'connect'
+-import 'updateUser' (our Action)
+-create our 'mapStateToProps' (bringing in our redux state)
+-create 'mapDispatchToProps'
+-modify export to include 'mapState / mapDispatch'
+-update 'componentDidMount'
+-create onClick event to 'handleLogin'
+
+Register.js
+-import axios / updateUser / connect
+-set up 'state'
+-create 'handleInput' with 'e.target'
+-add 'h1' tag
+-set up Inputs to send to 'handleInput'
+-create 'Register' button with an 'onClick'
+-create 'handleRegister' to update state
+-modify export with 'mapDispatchToProps'
+
+Landing.js
+-add the props to 'handleLogin' / add setState (clears inputs to be empty strings)
+
+Register.js
+-update props to 'handleRegister' / add setState
+
+Account.js
+-import 'connect' / 'axios'
+-create 'mapStateToProps' 
+-update export to use 'connect'
+-create 'h1' tag for Title / 'h3' tags to show email + balance
+-create a 'log out' button with an 'onClick'
+-make axios request (.post) to handle 'logout' and push you back to the Landing page
+
+mainController.js
+-create module.export
+-create 'updateBalance'
+
+index.js
+-bring in 'authController' / 'mainController'
+-create Endpoint using '.put'
+
+db Folder 
+-create 'update_balance.sql'
+-create 'check_user.sql'
+
+update_balance.sql
+-make an update command
+
+check_user.sql
+-copy the same command from 'check_email.sql' but change it to search the 'id'
+
+Account.js
+-import 'updateUser'
+-create 'mapDispatchToProps' / add it to the export
+-create 'update balance' button / add onClick
+-create 'updateBalance' axios (.put) request
+
+
+
+
+
+
+
+
+
